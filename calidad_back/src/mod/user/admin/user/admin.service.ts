@@ -2,9 +2,9 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Admin } from './entities/admin.entity';
-import { PaginationDto } from '@global/dto/pagination.dto';
+import { FilterUserDto } from '@module/user/dto/filter-user.dto';
 
 @Injectable()
 export class AdminService {
@@ -29,17 +29,17 @@ export class AdminService {
     return metadata.columns.map((column) => column.propertyName);
   }
 
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(filterUserDto: FilterUserDto) {
 
-    const { limit, page, field = 'id' , order = 'Asc' } = paginationDto
+    const { limit, page, field = 'id' , order = 'Asc' } = filterUserDto
     
-    if(!paginationDto.page && !paginationDto.limit) throw new NotFoundException(`
+    if(!filterUserDto.page && !filterUserDto.limit) throw new NotFoundException(`
       Recuerde que debe enviar los parametros page, limit
     `)
 
     if(field == '') throw new NotFoundException(`Debe enviar el campo por el que desea filtrar`)
-    if(!paginationDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
-    if(!paginationDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
+    if(!filterUserDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
+    if(!filterUserDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
 
     if(field != ''){
       const propiedades = this.listarPropiedadesTabla(this.adminRepository)
@@ -50,10 +50,26 @@ export class AdminService {
 
     const skipeReal = (page == 1) ? 0 : (page - 1) * limit
 
+    const where: any = {};
+
+    if (filterUserDto.email !== undefined && filterUserDto.email) {
+      where.email = Like(`%${filterUserDto.email}%`);
+    }
+    if (filterUserDto.firstName !== undefined && filterUserDto.firstName) {
+      where.firstName = Like(`%${filterUserDto.firstName}%`);
+    }
+    if (filterUserDto.lastName !== undefined && filterUserDto.lastName) {
+      where.lastName = Like(`%${filterUserDto.lastName}%`);
+    }
+    if (filterUserDto.isActive !== undefined && filterUserDto.isActive === 0 || filterUserDto.isActive === 1) {
+      where.isActive = filterUserDto.isActive;
+    }
+
     const peticion = async (page) => {
       return await this.adminRepository.find({
         skip: page,
         take: limit,
+        where: where,
         order: {
           [field]: order
         }
@@ -61,7 +77,9 @@ export class AdminService {
     }
 
     const totalRecords = async () => {
-      return await this.adminRepository.count()
+      return await this.adminRepository.count({
+        where: where
+      })
     }
 
     return [{

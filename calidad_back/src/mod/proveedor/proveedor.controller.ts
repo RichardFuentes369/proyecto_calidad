@@ -5,6 +5,7 @@ import { UpdateProveedorDto } from './dto/update-proveedor.dto';
 
 import { PaginationDto } from '@global/dto/pagination.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { FilterProveedorDto } from './dto/filter-proveedor.dto';
 
 @Controller('proveedor')
 export class ProveedorController {
@@ -18,8 +19,8 @@ export class ProveedorController {
 
     @ApiTags('proveedor')
     @Get()
-    findAll(@Query() paginationDto: PaginationDto) {
-      return this.proveedorService.findAll(paginationDto);
+    findAll(@Query() filterProveedorDto: FilterProveedorDto) {
+      return this.proveedorService.findAll(filterProveedorDto);
     }
 
     @ApiTags('proveedor')

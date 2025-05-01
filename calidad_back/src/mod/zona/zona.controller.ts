@@ -6,6 +6,7 @@ import { UpdateZonaDto } from './dto/update-zona.dto';
 
 import { PaginationDto } from '@global/dto/pagination.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { FilterZonaDto } from './dto/filter-zona.dto';
 
 @Controller('zona')
 export class ZonaController {
@@ -19,8 +20,8 @@ export class ZonaController {
 
     @ApiTags('zonaSocial')
     @Get()
-    findAll(@Query() paginationDto: PaginationDto) {
-      return this.zonaService.findAll(paginationDto);
+    findAll(@Query() filterZonaDto: FilterZonaDto) {
+      return this.zonaService.findAll(filterZonaDto);
     }    
     
     @ApiTags('zonaSocial')

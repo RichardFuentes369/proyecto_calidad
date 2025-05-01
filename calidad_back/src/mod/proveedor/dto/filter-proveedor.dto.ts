@@ -5,7 +5,7 @@ enum Order {
     desc = 'desc'
   }
 
-export class FilterOrdenDto {
+export class FilterProveedorDto {
 
     @IsPositive()
     @IsNumber()
@@ -25,31 +25,29 @@ export class FilterOrdenDto {
     @IsEnum(Order)
     order?: string;
 
-
-
     @IsOptional()
     @IsString()
-    serial?: string;    
+    email?: string;    
     
     @IsOptional()
     @IsString()
-    descripcion?: string;
+    firstName?: string;
 
     @IsOptional()
     @IsString()
-    precio?: string;
+    lastName?: string;
+
+    @IsOptional()
+    @IsNumber()
+    isActive?: number;
 
     @IsOptional()
     @IsString()
-    fecha_mantenimiento_inicio?: string;
+    razonSocial?: string;
 
     @IsOptional()
     @IsString()
-    fecha_mantenimiento_fin?: string;
-
-    @IsOptional()
-    @IsString()
-    fecha_creacion?: string;
+    telefono?: string;
 
     @IsOptional()
     @IsString()
@@ -57,6 +55,6 @@ export class FilterOrdenDto {
 
     @IsOptional()
     @IsString()
-    zona_id?: string;
+    nit?: string;
     
 }

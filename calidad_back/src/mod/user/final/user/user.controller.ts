@@ -7,6 +7,7 @@ import { PaginationDto } from '@global/dto/pagination.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 import { FinalGuard } from '@guard/final/final.guard';
+import { FilterUserDto } from '@module/user/dto/filter-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -20,8 +21,8 @@ export class UserController {
   
   @ApiTags('user')
   @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
-    return this.userService.findAll(paginationDto);
+  findAll(@Query() filterUserDto: FilterUserDto) {
+    return this.userService.findAll(filterUserDto);
   }
   
   @ApiTags('user')

@@ -2,10 +2,12 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProveedorDto } from './dto/create-proveedor.dto';
 import { UpdateProveedorDto } from './dto/update-proveedor.dto';
 
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Proveedor } from './entities/proveedor.entity';
 import { PaginationDto } from '@global/dto/pagination.dto';
 import { format } from 'date-fns';
+import { FilterProveedorDto } from './dto/filter-proveedor.dto';
+import { proveedorStatus } from './entities/enums/proveedorStatus';
 
 @Injectable()
 export class ProveedorService {
@@ -38,17 +40,17 @@ export class ProveedorService {
     return metadata.columns.map((column) => column.propertyName);
   }
 
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(filterProveedorDto: FilterProveedorDto) {
 
-    const { limit, page, field = 'id' , order = 'Asc' } = paginationDto
+    const { limit, page, field = 'id' , order = 'Asc' } = filterProveedorDto
     
-    if(!paginationDto.page && !paginationDto.limit) throw new NotFoundException(`
+    if(!filterProveedorDto.page && !filterProveedorDto.limit) throw new NotFoundException(`
       Recuerde que debe enviar los parametros page, limit
     `)
 
     if(field == '') throw new NotFoundException(`Debe enviar el campo por el que desea filtrar`)
-    if(!paginationDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
-    if(!paginationDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
+    if(!filterProveedorDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
+    if(!filterProveedorDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
 
     if(field != ''){
       const propiedades = this.listarPropiedadesTabla(this.proveedorRepository)
@@ -56,14 +58,36 @@ export class ProveedorService {
   
       if(arratResult == 0) throw new NotFoundException(`El parametro de busqueda ${field} no existe en la base de datos`)
     }
-
   
     const skipeReal = (page == 1) ? 0 : (page - 1) * limit
+
+    const where: any = {};
+
+    if (filterProveedorDto.isActive !== undefined && filterProveedorDto.isActive) {
+      where.isActive = Like(`%${filterProveedorDto.isActive}%`);
+    }
+
+    if (filterProveedorDto.razonSocial !== undefined && filterProveedorDto.razonSocial) {
+      where.razonSocial = Like(`%${filterProveedorDto.razonSocial}%`);
+    }
+
+    if (filterProveedorDto.telefono !== undefined && filterProveedorDto.telefono) {
+      where.telefono = Like(`%${filterProveedorDto.telefono}%`);
+    }
+
+    if (filterProveedorDto.estado !== undefined && filterProveedorDto.estado) {
+      where.estado = Like(`%${filterProveedorDto.estado}%`);
+    }    
+    
+    if (filterProveedorDto.nit !== undefined && filterProveedorDto.nit) {
+      where.nit = Like(`%${filterProveedorDto.nit}%`);
+    }
 
     const peticion = async (page) => {
       return await this.proveedorRepository.find({
         skip: page,
         take: limit,
+        where: where,
         order: {
           [field]: order
         }
@@ -80,7 +104,9 @@ export class ProveedorService {
    
 
     const totalRecords = async () => {
-      return await this.proveedorRepository.count()
+      return await this.proveedorRepository.count({
+        where: where
+      })
     }
 
     return [{
@@ -145,7 +171,7 @@ export class ProveedorService {
     return this.proveedorRepository.find({
       select: ['id', 'razonSocial'],
       where: [
-        { 'estado': 'activo' }
+        { 'estado': proveedorStatus.Activo }
       ]
     });
   }

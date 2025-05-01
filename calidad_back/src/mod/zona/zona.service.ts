@@ -2,10 +2,11 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateZonaDto } from './dto/create-zona.dto';
 import { UpdateZonaDto } from './dto/update-zona.dto';
 
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Zona } from './entities/zona.entity';
 import { PaginationDto } from '@global/dto/pagination.dto';
 import { format } from 'date-fns';
+import { FilterZonaDto } from './dto/filter-zona.dto';
 
 @Injectable()
 export class ZonaService {
@@ -36,17 +37,17 @@ export class ZonaService {
     return metadata.columns.map((column) => column.propertyName);
   }
 
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(filterZonaDto: FilterZonaDto) {
 
-    const { limit, page, field = 'id' , order = 'Asc' } = paginationDto
+    const { limit, page, field = 'id' , order = 'Asc' } = filterZonaDto
     
-    if(!paginationDto.page && !paginationDto.limit) throw new NotFoundException(`
+    if(!filterZonaDto.page && !filterZonaDto.limit) throw new NotFoundException(`
       Recuerde que debe enviar los parametros page, limit
     `)
 
     if(field == '') throw new NotFoundException(`Debe enviar el campo por el que desea filtrar`)
-    if(!paginationDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
-    if(!paginationDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
+    if(!filterZonaDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
+    if(!filterZonaDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
 
     if(field != ''){
       const propiedades = this.listarPropiedadesTabla(this.zonaRepository)
@@ -54,14 +55,23 @@ export class ZonaService {
   
       if(arratResult == 0) throw new NotFoundException(`El parametro de busqueda ${field} no existe en la base de datos`)
     }
-
   
     const skipeReal = (page == 1) ? 0 : (page - 1) * limit
+
+    const where: any = {};
+
+    if (filterZonaDto.nombre !== undefined && filterZonaDto.nombre) {
+      where.nombre = Like(`%${filterZonaDto.nombre}%`);
+    }
+    if (filterZonaDto.descripcion !== undefined && filterZonaDto.descripcion) {
+      where.descripcion = Like(`%${filterZonaDto.descripcion}%`);
+    }
 
     const peticion = async (page) => {
       return await this.zonaRepository.find({
         skip: page,
         take: limit,
+        where: where,
         order: {
           [field]: order
         }
@@ -78,7 +88,9 @@ export class ZonaService {
    
 
     const totalRecords = async () => {
-      return await this.zonaRepository.count()
+      return await this.zonaRepository.count({
+        where: where
+      })
     }
 
     return [{

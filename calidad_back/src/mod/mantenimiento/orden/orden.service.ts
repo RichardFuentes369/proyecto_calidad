@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrdenDto } from './dto/create-orden.dto';
 import { UpdateOrdenDto } from './dto/update-orden.dto';
 
-import { Repository } from 'typeorm';
+import { Between, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Repository } from 'typeorm';
 import { Orden } from './entities/orden.entity';
 import { PaginationDto } from '@global/dto/pagination.dto';
 import { FilterOrdenDto } from './dto/filter-orden.dto';
@@ -33,17 +33,17 @@ export class OrdenService {
     return metadata.columns.map((column) => column.propertyName);
   }
 
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(filterOrdenDto: FilterOrdenDto) {
 
-    const { limit, page, field = 'id' , order = 'Asc' } = paginationDto
+    const { limit, page, field = 'id' , order = 'Asc' } = filterOrdenDto
     
-    if(!paginationDto.page && !paginationDto.limit) throw new NotFoundException(`
+    if(!filterOrdenDto.page && !filterOrdenDto.limit) throw new NotFoundException(`
       Recuerde que debe enviar los parametros page, limit
     `)
 
     if(field == '') throw new NotFoundException(`Debe enviar el campo por el que desea filtrar`)
-    if(!paginationDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
-    if(!paginationDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
+    if(!filterOrdenDto.page) throw new NotFoundException(`Debe enviar el parametro page`)
+    if(!filterOrdenDto.limit) throw new NotFoundException(`Debe enviar el parametro limit`)
 
     if(field != ''){
       const propiedades = this.listarPropiedadesTabla(this.ordenRepository)
@@ -51,14 +51,58 @@ export class OrdenService {
   
       if(arratResult == 0) throw new NotFoundException(`El parametro de busqueda ${field} no existe en la base de datos`)
     }
-
     
     const skipeReal = (page == 1) ? 0 : (page - 1) * limit
     
+    const where: any = {};
+
+    if (filterOrdenDto.serial !== undefined && filterOrdenDto.serial != '') {
+      where.serial = Like(`%${filterOrdenDto.serial}%`);
+    }
+    if (filterOrdenDto.descripcion !== undefined && filterOrdenDto.descripcion != '') {
+      where.descripcion = Like(`%${filterOrdenDto.descripcion}%`);
+    }
+    if (filterOrdenDto.precio !== undefined && filterOrdenDto.precio != '') {
+      where.precio = Like(`%${filterOrdenDto.precio}%`);
+    }   
+    if (filterOrdenDto.estado !== undefined && filterOrdenDto.estado != '') {
+      where.estado = Like(`%${filterOrdenDto.estado}%`);
+    }
+    if (filterOrdenDto.zona_id !== undefined && filterOrdenDto.zona_id != '') {
+      where.zona_id = Like(`%${filterOrdenDto.zona_id}%`);
+    }
+    if(
+      (
+        filterOrdenDto.fecha_mantenimiento_inicio !== undefined && filterOrdenDto.fecha_mantenimiento_inicio != ''
+      ) 
+      || 
+      (
+        filterOrdenDto.fecha_mantenimiento_fin !== undefined && filterOrdenDto.fecha_mantenimiento_fin != ''
+      )
+    ){
+      if(filterOrdenDto.fecha_mantenimiento_inicio != '' && filterOrdenDto.fecha_mantenimiento_fin != ''){
+        let fecha_final = parseInt(filterOrdenDto.fecha_mantenimiento_fin) + 86399
+        where.fecha_mantenimiento = Between(filterOrdenDto.fecha_mantenimiento_inicio, fecha_final.toString());
+      }
+      if(filterOrdenDto.fecha_mantenimiento_inicio != '' && filterOrdenDto.fecha_mantenimiento_fin == undefined){
+          where.fecha_mantenimiento = MoreThanOrEqual(filterOrdenDto.fecha_mantenimiento_inicio);
+      }
+      if(filterOrdenDto.fecha_mantenimiento_inicio == undefined && filterOrdenDto.fecha_mantenimiento_fin != ''){
+        let fecha_final = parseInt(filterOrdenDto.fecha_mantenimiento_fin) + 86399
+        where.fecha_mantenimiento = LessThanOrEqual(fecha_final);
+      }
+    }
+    if (filterOrdenDto.fecha_creacion !== undefined && filterOrdenDto.fecha_creacion != '') {
+      let fecha_inicio = filterOrdenDto.fecha_creacion
+      let fecha_final = parseInt(filterOrdenDto.fecha_creacion) + 86399
+      where.fecha_creacion = Between(fecha_inicio, fecha_final.toString());
+    }
+
     const peticion = async (page) => {
       return await this.ordenRepository.find({
         skip: page,
         take: limit,
+        where: where, 
         order: {
           [field]: order
         },
@@ -67,7 +111,9 @@ export class OrdenService {
     }
 
     const totalRecords = async () => {
-      return await this.ordenRepository.count()
+      return await this.ordenRepository.count({
+        where: where
+      })
     }
 
     const dataReal = await peticion(skipeReal)
@@ -93,16 +139,6 @@ export class OrdenService {
         'field': field
       }
     }]
-  }
-
-  filterOrden(filterOrdenDto: FilterOrdenDto) {
-
-    const _serial =  filterOrdenDto.tipo + " - " + filterOrdenDto.serial
-
-    return this.ordenRepository.findOne({
-      where: [ {serial : _serial}],
-      order: { id: 'DESC' }
-    });
   }
 
   findOne(_id: number) {

@@ -16,14 +16,8 @@ export class OrdenController {
 
   @ApiTags('orden-mantenimiento')
   @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
-    return this.ordenService.findAll(paginationDto);
-  }
-
-  @ApiTags('orden-mantenimiento')
-  @Get('orden')
-  filterOrden(@Query() filterOrdenDto: FilterOrdenDto) {
-    return this.ordenService.filterOrden(filterOrdenDto);
+  findAll(@Query() filterOrdenDto: FilterOrdenDto) {
+    return this.ordenService.findAll(filterOrdenDto);
   }
 
   @ApiTags('orden-mantenimiento')
