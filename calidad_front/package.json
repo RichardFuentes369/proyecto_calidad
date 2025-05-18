@@ -33,7 +33,7 @@
     "express": "^4.18.2",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.48",
-    "ngx-cookie-service": "^18.0.0",
+    "ngx-cookie-service": "^17.1.0",
     "sweetalert2": "^11.10.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -47,7 +47,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/jquery": "^3.5.30",
     "@types/node": "^18.18.0",
-    "angular-datatables": "^18.0.0",
+    "angular-datatables": "^17.1.0",
     "datatables.net": "^2.1.2",
     "datatables.net-dt": "^2.1.2",
     "install": "^0.13.0",
