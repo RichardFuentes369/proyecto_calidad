@@ -1,0 +1,28 @@
+{
+  "routes": [
+    "/admin",
+    "/admin/configuracion",
+    "/admin/menu",
+    "/admin/menu/index-mantenimiento",
+    "/admin/menu/index-modulos",
+    "/admin/menu/index-modulos/crear-modulo",
+    "/admin/menu/index-modulos/editar-modulo",
+    "/admin/menu/index-modulos/index-submodulos",
+    "/admin/menu/index-modulos/index-submodulos/index-permisos",
+    "/admin/menu/index-modulos/ver-modulo",
+    "/admin/menu/index-proveedor",
+    "/admin/menu/index-usuarios",
+    "/admin/menu/index-usuarios/administradores",
+    "/admin/menu/index-usuarios/administradores/asignar-administrador",
+    "/admin/menu/index-usuarios/finales",
+    "/admin/menu/index-zona-comun",
+    "/admin/perfil",
+    "/inicio",
+    "/inicio/ingreso/admin",
+    "/inicio/ingreso/user",
+    "/inicio/inicio",
+    "/user",
+    "/user/configuracion",
+    "/user/perfil"
+  ]
+}

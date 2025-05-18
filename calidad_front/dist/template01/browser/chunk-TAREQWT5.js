@@ -1,0 +1,1 @@
+import{r as i,x as e}from"./chunk-N3246BH5.js";var c=(()=>{class t{static{this.\u0275fac=function(r){return new(r||t)}}static{this.\u0275mod=e({type:t})}static{this.\u0275inj=i({})}}return t})();export{c as a};
