@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "start": "node dist/gratitudeapp/server/server.mjs"
+    "serve:ssr:template01": "node dist/template01/server/server.mjs"
   },
   "private": true,
   "dependencies": {
