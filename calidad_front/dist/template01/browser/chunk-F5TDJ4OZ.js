@@ -1,1 +1,0 @@
-import{Sa as e,Ya as o,u as r}from"./chunk-N3246BH5.js";import{h as t}from"./chunk-YGAJRIQG.js";var h=(n,s)=>t(void 0,null,function*(){let i=r(o),u=r(e);return(yield i.isAuth("authuser"))?!0:u.navigate(["/inicio/ingreso/user"])});export{h as a};
