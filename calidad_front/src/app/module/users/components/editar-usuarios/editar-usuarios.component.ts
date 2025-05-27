@@ -80,8 +80,18 @@ export class EditarUsuariosComponent implements OnInit{
 
   }
 
-  actualizarData(){
-    this.userPrincipalService.updateUser(
+  async actualizarData(){
+
+    let complemento = localStorage.getItem('profile')
+    let endPoint
+
+    if(complemento == 'admin'){
+      endPoint = this.userPrincipalService
+    }else{
+      endPoint = this.userFinalService
+    }
+
+    await endPoint.updateUser(
       {
         "firstName": this.model.firstName,
         "lastName": this.model.lastName,

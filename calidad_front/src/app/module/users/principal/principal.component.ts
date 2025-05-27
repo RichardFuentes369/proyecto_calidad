@@ -144,7 +144,7 @@ export class PrincipalComponent implements OnInit{
     this.title = this.translate.instant('pages-usuarios.Title.EditAdminWord')
     this.save = false
     this.buttonSave = "Guardar"
-    this.edit = false
+    this.edit = true
     this.buttonEdit = "Editar"
     this.cancel = true
     this.buttonCancel = "Cancelar"
