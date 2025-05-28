@@ -60,7 +60,6 @@ export class CrearUsuariosComponent {
     .then(response=>{
       ocultarModalOscura()
       this.translate.get('pages-usuarios.Swal.TitleAreYouSure').subscribe((translatedTitle: string) => {
-        localStorage.removeItem('profile')
         Swal.fire({
           title: this.translate.instant('pages-usuarios.Swal.TitleCreate'),
           text: this.translate.instant('pages-usuarios.Swal.TitleRegisterCreate'),

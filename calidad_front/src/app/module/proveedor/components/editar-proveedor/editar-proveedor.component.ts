@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ocultarModalOscura } from '@functions/System';
 import { ProveedorService } from '@module/proveedor/index/service/proveedor.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
@@ -78,10 +79,13 @@ export class EditarProveedorComponent implements OnInit{
       },
       this.model.id
     ).then((response) =>{
+      ocultarModalOscura()
       this.translate.get('pages-zonaComun.Swal.TitleAreYouSure').subscribe((translatedTitle: string) => {
-        Swal.fire(
-          this.translate.instant('pages-zonaComun.Swal.TitleRegisterUpdated')
-        );
+        Swal.fire({
+          title: this.translate.instant('pages-zonaComun.Swal.TitleUpdate'),
+          text: this.translate.instant('pages-zonaComun.Swal.TitleRegisterUpdated'),
+          icon: "success"
+        });
       })
     }).catch(async error => {
       this.ngOnInit()

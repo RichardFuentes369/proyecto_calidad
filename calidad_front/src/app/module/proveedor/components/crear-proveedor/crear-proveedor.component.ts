@@ -49,7 +49,6 @@ export class CrearProveedorComponent {
     .then(response=>{
       ocultarModalOscura()
       this.translate.get('pages-proveedor.Swal.TitleAreYouSure').subscribe((translatedTitle: string) => {
-        localStorage.removeItem('profile')
         Swal.fire({
           title: this.translate.instant('pages-proveedor.Swal.TitleCreate'),
           text: this.translate.instant('pages-proveedor.Swal.TitleRegisterCreate'),

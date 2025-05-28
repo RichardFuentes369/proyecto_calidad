@@ -74,7 +74,6 @@ export class CrearHistoricoComponent implements OnInit{
         this.model.proveedor_id = ''
 
         this.translate.get('pages-mantenimiento.Swal.TitleAreYouSure').subscribe((translatedTitle: string) => {
-          localStorage.removeItem('profile')
           Swal.fire({
             title: this.translate.instant('pages-mantenimiento.Swal.TitleCreate'),
             text: this.translate.instant('pages-mantenimiento.Swal.TitleRegisterCreate'),

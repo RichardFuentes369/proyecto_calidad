@@ -47,7 +47,6 @@ export class CrearZonaComponent {
     .then(response=>{
       ocultarModalOscura()
       this.translate.get('pages-zonaComun.Swal.TitleAreYouSure').subscribe((translatedTitle: string) => {
-        localStorage.removeItem('profile')
         Swal.fire({
           title: this.translate.instant('pages-zonaComun.Swal.TitleCreate'),
           text: this.translate.instant('pages-zonaComun.Swal.TitleRegisterCreate'),

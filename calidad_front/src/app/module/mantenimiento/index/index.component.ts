@@ -117,7 +117,6 @@ export class IndexComponent {
   componenteFilter="FiltroMantenimientoComponent"
 
   crearData (_id: string){
-    localStorage.setItem('profile', 'admin')
     this.tamano = "xl"
     this.scrollable = false
     this.title = this.translate.instant('pages-mantenimiento.Title.CreateMaintenanceWord')

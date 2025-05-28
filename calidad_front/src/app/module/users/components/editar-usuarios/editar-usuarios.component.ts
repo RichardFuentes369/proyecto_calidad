@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import Swal from 'sweetalert2'
+import { ocultarModalOscura } from '@functions/System';
 
 interface AdministradorInterface {
   'id': number,
@@ -29,8 +30,8 @@ export class EditarUsuariosComponent implements OnInit{
   constructor(
     private router: Router,
     private route :ActivatedRoute,
-    private userPrincipalService :PrincipalService,
-    private userFinalService :FinalService,
+    private principalService :PrincipalService,
+    private finalService :FinalService,
     private translate: TranslateService
   ) { }
 
@@ -50,13 +51,13 @@ export class EditarUsuariosComponent implements OnInit{
     this.user = []
 
     if(this.route.snapshot.queryParams?.['rol'] === 'admin'){
-      this.usuarioReal = await this.userFinalService.getDataUser(
+      this.usuarioReal = await this.finalService.getDataUser(
         this.route.snapshot.queryParams?.['id']
         )
       }
 
     if(this.route.snapshot.queryParams?.['rol'] === 'user'){
-      this.usuarioReal = await this.userPrincipalService.getDataUser(
+      this.usuarioReal = await this.principalService.getDataUser(
         this.route.snapshot.queryParams?.['id']
       )
     }
@@ -86,9 +87,9 @@ export class EditarUsuariosComponent implements OnInit{
     let endPoint
 
     if(complemento == 'admin'){
-      endPoint = this.userPrincipalService
+      endPoint = this.principalService
     }else{
-      endPoint = this.userFinalService
+      endPoint = this.finalService
     }
 
     await endPoint.updateUser(
@@ -101,10 +102,13 @@ export class EditarUsuariosComponent implements OnInit{
       },
       this.model.id
     ).then((response) =>{
+      ocultarModalOscura()
       this.translate.get('pages-usuarios.Swal.TitleAreYouSure').subscribe((translatedTitle: string) => {
-        Swal.fire(
-          this.translate.instant('pages-usuarios.Swal.TitleRegisterUpdated')
-        );
+        Swal.fire({
+          title: this.translate.instant('pages-usuarios.Swal.TitleUpdate'),
+          text: this.translate.instant('pages-usuarios.Swal.TitleRegisterUpdated'),
+          icon: "success"
+        });
       })
     }).catch(async error => {
       this.ngOnInit()

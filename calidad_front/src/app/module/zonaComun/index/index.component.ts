@@ -102,7 +102,6 @@ export class IndexComponent implements OnInit{
   componenteFilter="FiltroZonaComponent"
 
   crearData (_id: string){
-    localStorage.setItem('profile', 'admin')
     this.tamano = "xl"
     this.scrollable = false
     this.title = "Crear zona comun"
@@ -151,7 +150,7 @@ export class IndexComponent implements OnInit{
     this.title = "Editar zona comun"
     this.save = false
     this.buttonSave = "Guardar"
-    this.edit = false
+    this.edit = true
     this.buttonEdit = "Editar"
     this.cancel = true
     this.buttonCancel = "Cancelar"

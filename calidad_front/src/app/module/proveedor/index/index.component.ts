@@ -109,7 +109,6 @@ export class IndexComponent implements OnInit{
   componenteFilter="FiltroProveedorComponent"
 
   crearData (_id: string){
-    localStorage.setItem('profile', 'admin')
     this.tamano = "xl"
     this.scrollable = false
     this.title = this.translate.instant('pages-proveedor.Title.CreateSupplierWord')
@@ -158,7 +157,7 @@ export class IndexComponent implements OnInit{
     this.title = this.translate.instant('pages-proveedor.Title.EditSupplierWord')
     this.save = false
     this.buttonSave = "Guardar"
-    this.edit = false
+    this.edit = true
     this.buttonEdit = "Editar"
     this.cancel = true
     this.buttonCancel = "Cancelar"

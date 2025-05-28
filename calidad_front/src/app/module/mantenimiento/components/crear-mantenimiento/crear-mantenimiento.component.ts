@@ -64,7 +64,6 @@ export class CrearMantenimientoComponent implements OnInit{
       .then(response=>{
         ocultarModalOscura()
         this.translate.get('pages-mantenimiento.Swal.TitleAreYouSure').subscribe((translatedTitle: string) => {
-          localStorage.removeItem('profile')
           Swal.fire({
             title: this.translate.instant('pages-mantenimiento.Swal.TitleCreate'),
             text: this.translate.instant('pages-mantenimiento.Swal.TitleRegisterCreate'),

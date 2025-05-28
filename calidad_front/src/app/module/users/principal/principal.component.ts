@@ -139,6 +139,7 @@ export class PrincipalComponent implements OnInit{
   }
 
   editarData (_id: string){
+    localStorage.setItem('profile', 'admin')
     this.tamano = "xl"
     this.scrollable = false
     this.title = this.translate.instant('pages-usuarios.Title.EditAdminWord')
