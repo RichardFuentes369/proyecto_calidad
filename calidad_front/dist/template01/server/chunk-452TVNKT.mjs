@@ -1,2 +1,0 @@
-import './polyfills.server.mjs';
-import{a,h as n}from"./chunk-G3HM7WKB.mjs";import{r as s}from"./chunk-6DRNBEGH.mjs";import{h as i}from"./chunk-COT65Y5O.mjs";var d=(()=>{class t{constructor(){}permisos(r,e){return i(this,null,function*(){let o="";e!=""?o+=`asignacion/mis-permisos?idUser=${r}&heredadosDe=${e}`:o=`asignacion/mis-permisos?idUser=${r}`;let c=a.apiUrl+o;return n.get(c)})}static{this.\u0275fac=function(e){return new(e||t)}}static{this.\u0275prov=s({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{d as a};

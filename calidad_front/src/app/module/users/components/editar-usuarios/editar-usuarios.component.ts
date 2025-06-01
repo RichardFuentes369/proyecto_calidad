@@ -71,6 +71,8 @@ export class EditarUsuariosComponent implements OnInit{
     this.model.isActive = this.usuarioReal.data.isActive
   }
 
+  typefield = 'password'
+
   goTo (url: string, _id: number){
 
     if(_id != 0){
@@ -79,6 +81,10 @@ export class EditarUsuariosComponent implements OnInit{
       this.router.navigate([url]);
     }
 
+  }
+
+  showPassword(){
+    this.typefield = (this.typefield === "password") ? "text" : "password"
   }
 
   async actualizarData(){

@@ -35,6 +35,8 @@ export class CrearUsuariosComponent {
     isActive: 0
   }
 
+  typefield = 'password'
+
   goTo (url: string, _id: number){
 
     if(_id != 0){
@@ -43,6 +45,10 @@ export class CrearUsuariosComponent {
       this.router.navigate([url]);
     }
 
+  }
+
+  showPassword(){
+    this.typefield = (this.typefield === "password") ? "text" : "password"
   }
 
   async crearUsuario(){

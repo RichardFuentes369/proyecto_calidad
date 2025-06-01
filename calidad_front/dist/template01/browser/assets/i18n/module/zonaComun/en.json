@@ -18,6 +18,7 @@
     "Swal": {
         "TitleAreYouSure": "Are you sure?",
         "TitleWarnigRevert": "You won't be able to revert this!",
+        "TitleUpdate": "Updated",
         "TitleCreate": "Created",
         "TitleCancel": "Cancel",
         "TitleDelete": "Deleted!",
