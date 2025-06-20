@@ -27,6 +27,12 @@ export class ModulosController {
   }
 
   @ApiTags('permisos_modulos')
+  @Get('getHasSubmodule')
+  findHijos(@Query() query) {
+    return this.modulosService.getHasSubmodule(+query.idModulo);
+  }
+
+  @ApiTags('permisos_modulos')
   @Post('postModuloPermiso')
   create(@Body() createModuloDto: CreateModuloDto) {
     return this.modulosService.create(createModuloDto);
