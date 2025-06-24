@@ -3,6 +3,10 @@ import { EditarUsuariosComponent } from "./users/components/editar-usuarios/edit
 import { VerUsuariosComponent } from "./users/components/ver-usuarios/ver-usuarios.component";
 import { FiltroUsuariosComponent } from './users/components/filtro/filtro.component';
 
+import { CrearModuloPermisoComponent } from './modules/components/crear-modulo-permiso/crear-modulo-permiso.component';
+import { EditarModuloPermisoComponent } from './modules/components/editar-modulo-permiso/editar-modulo-permiso.component';
+import { VerModuloPermisoComponent } from './modules/components/ver-modulo-permiso/ver-modulo-permiso.component';
+
 import { CrearZonaComponent } from './zonaComun/components/crear-zona/crear-zona.component';
 import { VerZonaComponent } from './zonaComun/components/ver-zona/ver-zona.component';
 import { EditarZonaComponent } from './zonaComun/components/editar-zona/editar-zona.component';
@@ -40,7 +44,21 @@ export class ListaComponentes {
     },
     {
       name: 'FiltroUsuariosComponent',
-      componente: FiltroUsuariosComponent
+      componente: FiltroUsuariosComponent      
+    },
+    
+    // modulos permisos
+    {
+      name: 'CrearModuloPermisoComponent',
+      componente: CrearModuloPermisoComponent  
+    },
+    {
+      name: 'EditarModuloPermisoComponent',
+      componente: EditarModuloPermisoComponent  
+    },
+    {
+      name: 'VerModuloPermisoComponent',
+      componente: VerModuloPermisoComponent  
     },
 
     // zona comun
