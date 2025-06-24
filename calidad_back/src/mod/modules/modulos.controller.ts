@@ -28,7 +28,7 @@ export class ModulosController {
 
   @ApiTags('permisos_modulos')
   @Get('getHasSubmodule')
-  findHijos(@Query() query) {
+  findSubmodules(@Query() query) {
     return this.modulosService.getHasSubmodule(+query.idModulo);
   }
 
