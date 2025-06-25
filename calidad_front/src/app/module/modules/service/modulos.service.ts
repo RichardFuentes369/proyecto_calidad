@@ -33,12 +33,23 @@ export class ModulosService {
     })
   }
 
-  async actualizarPermiso(idPermiso: string, idPadre: string, opcion: string, userId: string){
+  async asignarPermiso(idPermiso: string, idPadre: string, opcion: string, userId: string){
     let complemento = `asignacion/updateAsignacionPermiso?idPermiso=${idPermiso}&idPadre=${idPadre}&idUser=${userId}&opcion=${opcion}`
     let urlCopleta = environment.apiUrl+complemento
 
     return await axios.request({
       method: 'put',
+      url: urlCopleta,
+    })
+  }
+
+  async crearPermiso(data: any){
+    let complemento = `modulos/postModuloPermiso`
+    let urlCopleta = environment.apiUrl+complemento
+
+    return await axios.request({
+      method: 'post',
+      data: data,
       url: urlCopleta,
     })
   }
