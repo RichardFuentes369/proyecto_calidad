@@ -19,7 +19,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"modulo_padre_id\": 0,\r\n    \"nombre\": \"Modulos\",\r\n    \"permiso\": \"modulos\",\r\n    \"descripcion\": \"Habilita el modulo modulos\"\r\n}",
+									"raw": "{\r\n    \"modulo_padre_id\": 0,\r\n    \"tiene_submodulos\": false,\r\n    \"nombre\": \"Modulos\",\r\n    \"permiso\": \"modulos\",\r\n    \"descripcion\": \"Habilita el modulo modulos\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -39,37 +39,6 @@
 									]
 								},
 								"description": "Este enpoint servira para crear Modulos y permisos disponibles en la aplicacion.\n\nPara crear modulos el modulo_padre_id debe ser 0, si no lo tomara como un submodulo o permiso."
-							},
-							"response": []
-						},
-						{
-							"name": "deleteModuloPermiso",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "localhost:3000/api/modulos/deleteModuloPermiso?idModulo=0&permiso=configuracion",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"modulos",
-										"deleteModuloPermiso"
-									],
-									"query": [
-										{
-											"key": "idModulo",
-											"value": "0"
-										},
-										{
-											"key": "permiso",
-											"value": "configuracion"
-										}
-									]
-								},
-								"description": "Este enpoint servira para eliminar Modulos y permisos disponibles en la aplicacion.\n\nPara eliminar modulos el modulo_padre_id debe ser 0, si no lo tomara como un submodulo o permiso."
 							},
 							"response": []
 						},
@@ -192,6 +161,41 @@
 									]
 								},
 								"description": "Este enpoint servira para saber si tiene submodulos o no \"hijos\""
+							},
+							"response": []
+						},
+						{
+							"name": "editModuloPermiso",
+							"request": {
+								"method": "PUT",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "deleteModuloPermiso",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/modulos/deleteModuloPermiso?idPermiso=0",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"modulos",
+										"deleteModuloPermiso"
+									],
+									"query": [
+										{
+											"key": "idPermiso",
+											"value": "0"
+										}
+									]
+								},
+								"description": "Este enpoint servira para eliminar Modulos y permisos disponibles en la aplicacion.\n\nPara eliminar modulos el modulo_padre_id debe ser 0, si no lo tomara como un submodulo o permiso."
 							},
 							"response": []
 						}
