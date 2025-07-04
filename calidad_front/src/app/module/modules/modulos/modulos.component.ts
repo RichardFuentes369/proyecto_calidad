@@ -9,7 +9,6 @@ import Swal from 'sweetalert2'
 import { Permisos } from '@functions/System'
 import { ModulosService } from '../service/modulos.service';
 import { ModalBoostrapComponent } from '@component/globales/modal/boostrap/boostrap.component';
-import { LoadingComponent } from '@component/globales/loading/loading.component';
 
 @Component({
   selector: 'app-modulos',
@@ -18,7 +17,6 @@ import { LoadingComponent } from '@component/globales/loading/loading.component'
     TranslateModule, 
     TablecrudComponent,
     ModalBoostrapComponent,
-    LoadingComponent
   ],
   templateUrl: './modulos.component.html',
   styleUrl: './modulos.component.scss'

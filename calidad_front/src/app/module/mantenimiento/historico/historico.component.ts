@@ -3,14 +3,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { PipesModule } from '@pipe/pipes.module';
 import { AuthService } from '@guard/service/auth.service';
 import { PermisosService } from '@service/globales/permisos/permisos.service';
 
 import Swal from 'sweetalert2'
 
 import { TablecrudComponent } from '@component/globales/tablecrud/tablecrud.component';
-import { ModalBoostrapComponent } from '@component/globales/modal/boostrap/boostrap.component';
 
 import { MantenimientoService } from '../index/service/mantenimiento.service';
 import { CrearHistoricoComponent } from '../components/crear-historico/crear-historico.component';
@@ -20,11 +18,9 @@ import { CrearHistoricoComponent } from '../components/crear-historico/crear-his
   standalone: true,
   imports: [
     CommonModule, 
-    PipesModule, 
     TranslateModule,
     TablecrudComponent,
     CrearHistoricoComponent,
-    ModalBoostrapComponent,
   ],
   templateUrl: './historico.component.html',
   styleUrl: './historico.component.scss'

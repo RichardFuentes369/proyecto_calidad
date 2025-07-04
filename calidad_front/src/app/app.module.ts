@@ -51,9 +51,6 @@ export function createTranslateLoader(http: HttpClient) {
       { baseTranslateUrl, moduleName: 'module/basico', namespace: 'pages-basico'},
       { baseTranslateUrl, moduleName: 'module/usuarios', namespace: 'pages-usuarios'},
       { baseTranslateUrl, moduleName: 'module/modulos', namespace: 'pages-modulos'},
-      { baseTranslateUrl, moduleName: 'module/mantenimiento', namespace: 'pages-mantenimiento'},
-      { baseTranslateUrl, moduleName: 'module/proveedor', namespace: 'pages-proveedor'},
-      { baseTranslateUrl, moduleName: 'module/zonaComun', namespace: 'pages-zonaComun'},
       // fin modulos
     ]
   };
@@ -62,9 +59,9 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent,
   ],
   imports: [
+    AppComponent,
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -74,13 +71,12 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       },
     }),
-    RouterModule,
     FormsModule,
     AppRoutingModule,
   ],
   providers: [
     provideHttpClient(withFetch()),
-    provideClientHydration()
+    provideClientHydration() // Si lo estás usando
   ],
   bootstrap: [AppComponent]
 })

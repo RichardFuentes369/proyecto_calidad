@@ -7,9 +7,7 @@ import { PermisosService } from '../../../services/globales/permisos/permisos.se
 import { ModulosService } from '../service/modulos.service';
 import Swal from 'sweetalert2'
 
-import { Permisos } from '@functions/System'
 import { ModalBoostrapComponent } from '@component/globales/modal/boostrap/boostrap.component';
-import { LoadingComponent } from '@component/globales/loading/loading.component';
 @Component({
   selector: 'app-submodulos',
   standalone: true,
@@ -17,7 +15,6 @@ import { LoadingComponent } from '@component/globales/loading/loading.component'
     TranslateModule, 
     TablecrudComponent,
     ModalBoostrapComponent,
-    LoadingComponent
   ],
   templateUrl: './submodulos.component.html',
   styleUrl: './submodulos.component.scss'
