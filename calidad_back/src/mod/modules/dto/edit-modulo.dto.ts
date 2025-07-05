@@ -21,6 +21,4 @@ export class EditModuloDto {
   @IsNumber()
   // @Transform(({value}) => value.trim())
   readonly tiene_submodulos;
-
-  
 }

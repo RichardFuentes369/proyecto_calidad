@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateModuloDto } from './dto/create-modulo.dto';
 
-import { IsNull, Repository } from 'typeorm';
+import { IsNull, Repository, UpdateResult } from 'typeorm';
 import { Modulo } from './entities/modulo.entity';
 import { PaginationDto } from '@global/dto/pagination.dto';
 import { I18nService } from 'nestjs-i18n';
@@ -360,25 +360,63 @@ export class ModulosService {
   async updateModulePermiso(query: any, editModuloDto: EditModuloDto){
     // query.idPermiso sera el id de la tabla mod_permisos_modulo
     let modulo = await this.getPermisoModulo(query.idPermiso)
-    let asignacion = await this.getPermisoModuloAsignacion(modulo)
+    let asignacion = await this.getPermisoModuloAsignacion(modulo)  
 
-    if(asignacion != 0){
-      // actualizar todo en mod_permisos_modulo_asignacion
-      // actualizar en mod_permisos_modulo
-    }else{
-      // actualizar en mod_permisos_modulo
+    // actualizar en mod_permisos_modulo
+    const moduloPermiso = await this.moduloRepository.findOne({
+      where: {
+        id: query.idPermiso,
+      }
+    });
+    const updateResult: UpdateResult = await this.moduloRepository.update(
+        {
+          // WHERE
+          nombre: moduloPermiso.nombre,
+          permiso: moduloPermiso.permiso,
+          descripcion: moduloPermiso.descripcion
+        },
+        {
+          // SET
+          nombre: editModuloDto.nombre,
+          permiso: editModuloDto.permiso,
+          descripcion: editModuloDto.descripcion
+        }
+    );
+
+    // actualizar en mod_permisos_modulo_asignacion
+    if(asignacion > 0){
+      const asignacion = await this.asignacionRepository.find({
+        where: {
+          nombre: moduloPermiso.nombre,
+          permiso: moduloPermiso.permiso,
+          descripcion: moduloPermiso.descripcion
+        }
+      });
+      if(asignacion.length > 0){
+        const updateResult: UpdateResult = await this.asignacionRepository.update(
+          {
+            // WHERE
+            nombre: moduloPermiso.nombre,
+            permiso: moduloPermiso.permiso,
+            descripcion: moduloPermiso.descripcion
+          },
+          {
+            //SET
+            nombre: editModuloDto.nombre,
+            permiso: editModuloDto.permiso,
+            descripcion: editModuloDto.descripcion
+          }
+      );
+      }
     }
-
-    return asignacion
-
-
-    // const elimiarModulo = this.moduloRepository.delete(idRegistro[0].id);
-    // return {
-    //   'title': this.i18n.t('modulo.MSJ_PERMISO_TITTLE'),
-    //   'message': this.i18n.t('modulo.MSN_PERMISO_REMOVIDO_OK'),
-    //   'status': 200,
-    // }
     
+  
+
+    return {
+      'title': this.i18n.t('modulo.MSJ_PERMISO_TITTLE'),
+      'message': this.i18n.t('modulo.MSN_PERMISO_UPDATED_OK'),
+      'status': 200,
+    }
   }
 
 

@@ -165,14 +165,6 @@
 							"response": []
 						},
 						{
-							"name": "editModuloPermiso",
-							"request": {
-								"method": "PUT",
-								"header": []
-							},
-							"response": []
-						},
-						{
 							"name": "deleteModuloPermiso",
 							"request": {
 								"method": "DELETE",
@@ -196,6 +188,76 @@
 									]
 								},
 								"description": "Este enpoint servira para eliminar Modulos y permisos disponibles en la aplicacion.\n\nPara eliminar modulos el modulo_padre_id debe ser 0, si no lo tomara como un submodulo o permiso."
+							},
+							"response": []
+						},
+						{
+							"name": "editModuloPermiso",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nombre\": \"Prueba\",\n    \"permiso\": \"prueba\",\n    \"descripcion\": \"prueba\",\n    \"tiene_submodulos\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/modulos/editModuloPermiso?idPermiso=43",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"modulos",
+										"editModuloPermiso"
+									],
+									"query": [
+										{
+											"key": "idPermiso",
+											"value": "43"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editModuloPermiso",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nombre\": \"Prueba\",\n    \"permiso\": \"prueba\",\n    \"descripcion\": \"prueba\",\n    \"tiene_submodulos\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/modulos/editModuloPermiso?idPermiso=43",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"modulos",
+										"editModuloPermiso"
+									],
+									"query": [
+										{
+											"key": "idPermiso",
+											"value": "43"
+										}
+									]
+								}
 							},
 							"response": []
 						}
